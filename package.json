@@ -1,0 +1,27 @@
+{
+	"name": "book",
+	"version": "1.0.0",
+	"description": "",
+	"main": "app.js",
+	"type": "module",
+	"scripts": {
+		"start": "live-server",
+		"build": "rollup -c --watch"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/ikarpushyn/Book.git"
+	},
+	"author": "Iliya Karpushyn",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/ikarpushyn/Book/issues"
+	},
+	"homepage": "https://github.com/ikarpushyn/Book#readme",
+	"devDependencies": {
+		"@rollup/plugin-node-resolve": "^15.1.0",
+		"eslint": "^8.42.0",
+		"rollup": "^3.25.1",
+		"rollup-plugin-import-css": "^3.2.1"
+	}
+}
