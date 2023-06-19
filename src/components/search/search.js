@@ -7,27 +7,32 @@ export class Search extends DivComponent {
 		this.state = state;
 	}
 
+	search() {
+		const value = this.el.querySelector('input').value;
+		this.state.searchQuery = value;
+	}
+
 	render() {
 		this.el.classList.add('search');
 		this.el.innerHTML = `
 			<div class="search__wrapper">
 				<input
 					type="text"
-					placeholder="Найти книгу или автора...."
+					placeholder="Find book or author...."
 					class="search__input"
 					value="${this.state.searchQuery ? this.state.searchQuery : ''}"
 				/>
-				<img src="/static/search.svg" alt="Иконка поиска" />
+				<img src="/static/search.svg" alt="search ico" />
 			</div>
-			<button aria-label="Искать"><img src="/static/search-white.svg" alt="Иконка поиска" /></button>
+			<button aria-label="Искать"><img src="/static/search-white.svg" alt="search ico" /></button>
 		`;
 
-		// this.el.querySelector('button').addEventListener('click', this.search.bind(this));
-		// this.el.querySelector('input').addEventListener('keydown', (event) => {
-		// 	if (event.code === 'Enter') {
-		// 		this.search();
-		// 	}
-		// });
+		this.el.querySelector('button').addEventListener('click', this.search.bind(this));
+		this.el.querySelector('input').addEventListener('keydown', (e) => {
+			if (e.code === 'Enter') {
+				this.search();
+			}
+		});
 
 		return this.el;
 	}
