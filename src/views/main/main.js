@@ -23,7 +23,9 @@ export class MainView extends AbstractView {
 
 	appStateHook(path) {
 		if (path === 'favorites') {
+			this.render();
 			console.log(path);
+			console.log(this.appState.favorites);
 		}
 	}
 
@@ -34,10 +36,11 @@ export class MainView extends AbstractView {
 
 			this.state.loading = false;
 
-			console.log(data);
+			console.log(data.docs[1]);
 			this.state.numFound = data.numFound;
 			this.state.list = data.docs;
 		}
+
 		if (path === 'list' || path === 'loading') {
 			this.render();
 		}
@@ -54,6 +57,7 @@ export class MainView extends AbstractView {
 		main.append(new Search(this.state).render());
 		main.append(new CardList(this.appState, this.state).render());
 
+		//console
 		this.app.innerHTML = '';
 		this.app.append(main);
 		this.renderHeader();
@@ -63,4 +67,6 @@ export class MainView extends AbstractView {
 		const header = new Header(this.appState).render();
 		this.app.prepend(header);
 	}
+
+	//GPT
 }

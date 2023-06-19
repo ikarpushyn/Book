@@ -1100,6 +1100,14 @@
 			this.cardState = cardState;
 		}
 
+		#addToFavorites() {
+			this.appState.favorites.push(this.cardState);
+		}
+
+		#deleteFromFavorites() {
+			this.appState.favorites = this.appState.favorites.filter((b) => b.key !== this.cardState.key);
+		}
+
 		render() {
 			this.el.classList.add('card');
 			const existInFavorites = this.appState.favorites.find((b) => b.key == this.cardState.key);
@@ -1131,6 +1139,29 @@
 			</div>
 		`;
 
+			// my option
+			// const addButton = this.el.querySelector('.button__add');
+			// addButton.addEventListener('click', () => {
+			// 	const key = addButton.getAttribute('data-key');
+			// 	const existingFavorite = this.appState.favorites.find((b) => b.key == key);
+			// 	if (existingFavorite) {
+			// 		this.appState.favorites = this.appState.favorites.filter((b) => b.key !== key);
+			// 	} else {
+			// 		const newFavorite = this.cardState;
+			// 		this.appState.favorites.push(newFavorite);
+			// 	}
+			// 	console.log(this.appState.favorites);
+			// });
+
+			//mentor option
+
+			if (existInFavorites) {
+				this.el
+					.querySelector('button')
+					.addEventListener('click', this.#deleteFromFavorites.bind(this));
+			} else {
+				this.el.querySelector('button').addEventListener('click', this.#addToFavorites.bind(this));
+			}
 			return this.el;
 		}
 	}
@@ -1151,7 +1182,7 @@
 			this.el.classList.add('card_List');
 
 			this.el.innerHTML = `
-			<h1>Find books - ${this.parentState.numFound} <3 </h1>
+			<h1>Find books - ${this.parentState.numFound}</h1>
 			`;
 
 			for (const card of this.parentState.list) {
@@ -1181,7 +1212,9 @@
 
 		appStateHook(path) {
 			if (path === 'favorites') {
+				this.render();
 				console.log(path);
+				console.log(this.appState.favorites);
 			}
 		}
 
@@ -1192,10 +1225,11 @@
 
 				this.state.loading = false;
 
-				console.log(data);
+				console.log(data.docs[1]);
 				this.state.numFound = data.numFound;
 				this.state.list = data.docs;
 			}
+
 			if (path === 'list' || path === 'loading') {
 				this.render();
 			}
@@ -1212,6 +1246,7 @@
 			main.append(new Search(this.state).render());
 			main.append(new CardList(this.appState, this.state).render());
 
+			//console
 			this.app.innerHTML = '';
 			this.app.append(main);
 			this.renderHeader();
@@ -1221,6 +1256,8 @@
 			const header = new Header(this.appState).render();
 			this.app.prepend(header);
 		}
+
+		//GPT
 	}
 
 	class App {

@@ -8,6 +8,14 @@ export class Card extends DivComponent {
 		this.cardState = cardState;
 	}
 
+	#addToFavorites() {
+		this.appState.favorites.push(this.cardState);
+	}
+
+	#deleteFromFavorites() {
+		this.appState.favorites = this.appState.favorites.filter((b) => b.key !== this.cardState.key);
+	}
+
 	render() {
 		this.el.classList.add('card');
 		const existInFavorites = this.appState.favorites.find((b) => b.key == this.cardState.key);
@@ -39,6 +47,29 @@ export class Card extends DivComponent {
 			</div>
 		`;
 
+		// my option
+		// const addButton = this.el.querySelector('.button__add');
+		// addButton.addEventListener('click', () => {
+		// 	const key = addButton.getAttribute('data-key');
+		// 	const existingFavorite = this.appState.favorites.find((b) => b.key == key);
+		// 	if (existingFavorite) {
+		// 		this.appState.favorites = this.appState.favorites.filter((b) => b.key !== key);
+		// 	} else {
+		// 		const newFavorite = this.cardState;
+		// 		this.appState.favorites.push(newFavorite);
+		// 	}
+		// 	console.log(this.appState.favorites);
+		// });
+
+		//mentor option
+
+		if (existInFavorites) {
+			this.el
+				.querySelector('button')
+				.addEventListener('click', this.#deleteFromFavorites.bind(this));
+		} else {
+			this.el.querySelector('button').addEventListener('click', this.#addToFavorites.bind(this));
+		}
 		return this.el;
 	}
 }
