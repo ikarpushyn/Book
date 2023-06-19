@@ -21,6 +21,11 @@ export class MainView extends AbstractView {
 		this.setTitle('Search Book');
 	}
 
+	destroy() {
+		onChange.unsubscribe(this.appState);
+		onChange.unsubscribe(this.state);
+	}
+
 	appStateHook(path) {
 		if (path === 'favorites') {
 			this.render();
@@ -41,7 +46,7 @@ export class MainView extends AbstractView {
 			this.state.list = data.docs;
 		}
 
-		if (path === 'list' || path === 'loading') {
+		if (path === 'list' || path === 'loading' || path === 'showFavorites') {
 			this.render();
 		}
 	}
@@ -54,10 +59,12 @@ export class MainView extends AbstractView {
 
 	render() {
 		const main = document.createElement('div');
+		main.innerHTML = `
+			<h1>Find books - ${this.state.numFound}</h1>
+			`;
 		main.append(new Search(this.state).render());
 		main.append(new CardList(this.appState, this.state).render());
 
-		//console
 		this.app.innerHTML = '';
 		this.app.append(main);
 		this.renderHeader();
@@ -67,6 +74,4 @@ export class MainView extends AbstractView {
 		const header = new Header(this.appState).render();
 		this.app.prepend(header);
 	}
-
-	//GPT
 }

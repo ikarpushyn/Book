@@ -15,14 +15,17 @@ export class CardList extends DivComponent {
 			return this.el;
 		}
 
-		this.el.classList.add('card_List');
+		if (this.parentState.numFound == 0) {
+			this.el.innerHTML = `<div class="card_list__loader">Not found<div>`;
+			return this.el;
+		}
 
-		this.el.innerHTML = `
-			<h1>Find books - ${this.parentState.numFound}</h1>
-			`;
+		const cardGrid = document.createElement('div');
+		cardGrid.classList.add('card_grid');
+		this.el.appendChild(cardGrid);
 
 		for (const card of this.parentState.list) {
-			this.el.append(new Card(this.appState, card).render());
+			cardGrid.append(new Card(this.appState, card).render());
 		}
 
 		return this.el;
